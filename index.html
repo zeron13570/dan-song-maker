@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101723">
+  <title>단위 과제곡 메이커 · NIJIIRO 2026</title>
+  <meta name="description" content="2026 단위도장 57곡 프리셋으로 곡 카드를 만들고 투명 PNG로 저장하세요.">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="./"><span class="brand-mark" aria-hidden="true">段</span><span>단위 과제곡 메이커<small>NIJIIRO · 2026</small></span></a><div class="top-note"><span class="live-dot"></span>브라우저에서 만들고, 투명 PNG로 저장</div></header>
+  <main class="workspace">
+    <aside class="library panel" aria-label="과제곡 프리셋">
+      <div class="section-head"><h1>과제곡 라이브러리</h1><span class="pill">57곡</span></div>
+      <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="제목, 아티스트, 단위 검색" aria-label="프리셋 검색"></label>
+      <div class="library-tabs" role="group" aria-label="프리셋 구분"><button id="all-tab" aria-pressed="true">2026 과제곡</button><button id="saved-tab" aria-pressed="false">내 프리셋 <span id="saved-count">0</span></button></div>
+      <p id="results" class="muted library-caption">19개 단위 · 5급부터 달인까지</p>
+      <nav id="preset-list" aria-label="단위별 곡 목록"><p class="empty">프리셋을 불러오는 중…</p></nav>
+      <p class="library-foot">내 프리셋은 이 브라우저에 저장됩니다.</p>
+    </aside>
+    <section class="stage" aria-label="이미지 미리보기와 저장">
+      <div class="stage-heading"><div><p class="eyebrow">YOUR SONG CARD</p><h2 id="selection">달인 · 3곡</h2></div><span id="edit-badge" class="pill">2026 프리셋</span></div>
+      <div id="preview" class="preview checker"><canvas id="card" width="960" height="425" role="img" aria-label="생성된 단위 과제곡 이미지"></canvas><div id="loading" role="status"><span class="spinner"></span><strong>이미지 생성기를 준비하고 있어요</strong><span>처음에는 글꼴과 이미지를 불러오는 데 잠시 걸립니다.</span></div></div>
+      <div class="preview-tools"><span id="dimensions">투명 배경 · PNG</span><div class="background-options" role="group" aria-label="미리보기 배경"><button data-bg="checker" aria-pressed="true" title="격자 배경">격자</button><button data-bg="dark" aria-pressed="false">어둡게</button><button data-bg="light" aria-pressed="false">밝게</button></div></div>
+      <div class="export-panel panel"><div class="export-top"><div><h2>이미지 저장</h2><p>미리보기 배경 없이, 곡 카드만 저장됩니다.</p></div><label class="scale-label">출력 배율<select id="Scale" form="editor"><option value="1">1× 기본 크기</option><option value="2" selected>2× 추천</option><option value="3">3×</option><option value="4">4×</option></select></label></div><button id="download" class="primary" disabled><span aria-hidden="true">↓</span> 투명 PNG 저장</button><div class="export-secondary"><button id="batch" disabled>57곡 한 번에 저장 · ZIP</button><button id="cancel-batch" hidden>중단</button></div><progress id="progress" max="57" value="0" hidden></progress><p id="status" class="status" role="status" aria-live="polite">리소스를 불러오는 중입니다.</p></div>
+      <footer>4개 난이도 · 투명 PNG · 텍스트 테두리<br><span>입력한 내용은 서버로 전송되지 않습니다.</span></footer>
+    </section>
+    <section class="editor panel" aria-labelledby="editor-title">
+      <div class="section-head"><h2 id="editor-title">곡 정보 편집</h2><button id="reset" class="text-button" title="현재 프리셋으로 되돌리기">되돌리기</button></div>
+      <form id="editor" autocomplete="off">
+        <label>상단 단위 명패<select id="Rank" name="Rank"></select></label>
+        <label>제목<input id="Title" name="Title" maxlength="160" required></label>
+        <label>아티스트 / 부제<input id="Artist" name="Artist" maxlength="220"></label>
+        <div class="divider"></div><h3>과제곡 난이도</h3>
+        <label>상단 명패에 표시할 아이콘<select id="Difficulty" name="Difficulty"><option value="1">쉬움 · かんたん</option><option value="2">보통 · ふつう</option><option value="3">어려움 · むずかしい</option><option value="4">오니 · おに</option></select></label>
+        <label class="check"><input type="checkbox" id="CourseUra" name="CourseUra"><span>상단 명패에 우라(裏) 표시</span></label>
+        <div class="divider"></div><div class="section-head"><h3>4개 난이도 레벨</h3><span class="muted">1–99</span></div>
+        <div class="level-grid"><label class="easy"><span><i></i>쉬움</span><input id="EasyLevel" type="number" min="1" max="99" required></label><label class="normal"><span><i></i>보통</span><input id="NormalLevel" type="number" min="1" max="99" required></label><label class="hard"><span><i></i>어려움</span><input id="HardLevel" type="number" min="1" max="99" required></label><label class="oni"><span id="fourth-label"><i></i>오니</span><input id="FourthLevel" type="number" min="1" max="99" required aria-label="오니 또는 우라 레벨"></label></div>
+        <label class="check"><input type="checkbox" id="Ura"><span>네 번째 칸을 우라로 표시</span></label><p class="hint">오니와 우라 레벨은 따로 기억합니다.<br>우라도 <b>おに</b>로 표기됩니다.</p>
+        <details class="appearance"><summary>글자·출력 모양 조정</summary><div class="two-col"><label>제목 크기<input id="TitleSize" type="number" min="16" max="72" required></label><label>부제 크기<input id="ArtistSize" type="number" min="12" max="44" required></label></div><label class="check"><input type="checkbox" id="OriginalFont"><span>비트맵 글꼴 사용</span></label><div class="two-col"><label>회전 (°)<input id="Angle" type="number" min="-15" max="15" required></label><label>가로 변형 (%)<input id="Skew" type="number" min="-15" max="15" required></label></div><button id="reset-style" type="button">기본 모양으로</button></details>
+      </form>
+      <button id="save-custom" class="wide">＋ 내 프리셋에 저장</button><div class="two-col settings-actions"><button id="export-settings">설정 내보내기</button><button id="import-settings">설정 불러오기</button></div><input type="file" id="settings-file" accept=".json,application/json" hidden>
+    </section>
+  </main>
+  <noscript>이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 허용해 주세요.</noscript>
+</body>
+</html>
